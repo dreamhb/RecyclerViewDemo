@@ -9,6 +9,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         rView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);//new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);
         rView.setLayoutManager(mLayoutManager);
 
         mAdapter = new TAdapter(datasets, new View.OnClickListener() {
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public MViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            TextView view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item, null);
+            RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item, null);
             view.setOnClickListener(this);
             MViewHolder holder = new MViewHolder(view);
             return holder;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MViewHolder holder, int position) {
             String item = dataSets[position];
-            holder.textView.setText(item);
+            holder.tv.setText(item);
         }
 
         @Override
@@ -81,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
         class MViewHolder extends RecyclerView.ViewHolder{
 
-            public TextView textView;
+            public RelativeLayout ll;
+            public TextView tv;
 
-            public MViewHolder(TextView tv) {
-                super(tv);
-                textView = tv;
+            public MViewHolder(RelativeLayout ll) {
+                super(ll);
+                this.ll = ll;
+                tv = (TextView)ll.findViewById(R.id.card_view_tv);
             }
         }
 
